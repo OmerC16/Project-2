@@ -16,7 +16,6 @@ CONST_X = 5
 VERTICAL_DIST_MIN = 2.01 - 0.18
 VERTICAL_DIST_MAX = 8.98 - 0.18
 WIDTH_TO_HEIGHT_RATIO = 0.5
-ORBITING_ASTEROID_RADIUS = 0.08
 
 path = kagglehub.dataset_download(KAGGLE_DATASET)
 
@@ -43,8 +42,6 @@ aphelionDist = st.slider("Enter the Aphelion distance of the asteroid (AU):", 2.
 
 st.success("Perihelion distance: " + str(perihelionDist) + "AU\n\nAphelion distance: " + str(aphelionDist) + "AU\n\nThe Orbital period is: " + str(np.round(model.predict(np.array([[perihelionDist, aphelionDist]])), 3)[0]) + " days")
 
-orbitAngle = st.slider("Asteroid Position (angle on orbit parameter):", 0, 360, value=270)
-
 verticalDist = aphelionDist + perihelionDist + 2 * ORBIT_OBJECT_RADIUS
 maxY = verticalDist + 2
 constY = maxY - verticalDist + perihelionDist
@@ -65,22 +62,9 @@ orbitAround = plt.Circle(
 )
 ax.add_patch(orbitAround)
 
-theta = np.radians(orbitAngle)
 # Semi-axes lengths
 a = verticalDist / 2  # Semi-vertical axis
 b = (verticalDist * WIDTH_TO_HEIGHT_RATIO) / 2  # Semi-horizontal axis
-
-asteroid_x = CONST_X + b * np.cos(theta)
-asteroid_y = yValue + a * np.sin(theta)
-
-orbitingAsteroid = plt.Circle(
-    xy=(asteroid_x, asteroid_y),
-    radius=ORBITING_ASTEROID_RADIUS,
-    edgecolor="black",
-    facecolor="black",
-    label="Orbiting Asteroid",
-)
-ax.add_patch(orbitingAsteroid)
 
 # Configure axes
 ax.set_xlim(0, CONST_X * 2)

@@ -1,0 +1,72 @@
+Code of info page:
+import streamlit as st
+import kagglehub
+import os
+import pandas as pd
+import numpy as np
+KAGGLE_DATASET = "shrutimehta/nasa-asteroids-classification"
+FEATURE_COLUMNS = ["Perihelion Distance", "Aphelion Dist"]
+TARGET_COLUMN = "Orbital Period"
+CSV_TABLE = "nasa.csv"
+
+if "stage" not in st.session_state:
+    st.session_state.stage = 1
+if "finished" not in st.session_state:
+    st.session_state.finished = False
+if "data" not in st.session_state:
+    st.session_state.data = None
+
+if (st.session_state.stage == 1):
+    st.title("Model explanation")
+    st.write("I have decided to create a model that will predict the orbital period of a asteroid, based on it perihelion distance and the aphelion distance.")
+    st.info("Notes\n\nOrbital period - The time it takes (in days) for a sattelite to complete one full orbit.\n\nPerihelion distance - The distance of the sattelite from the parental object it orbits, at its closest point to it.\n\nAphelion distance - The distance of the sattelite from the parental object it orbits, at its farthest point fro it.")
+
+    if (st.button("Preview dataset")):
+        st.session_state.stage = 2
+        st.rerun()
+
+if (st.session_state.stage == 2):
+    st.title("Dataset")
+    st.write(
+        f"For this project I have decided to use the following dataset: {KAGGLE_DATASET}.\n\n"
+        "This dataset gives information about near earth objects."
+        )
+
+    if st.button("Download dataset"):
+        with st.spinner("Downloading near earth object dataset", show_time=True):
+            path = kagglehub.dataset_download(KAGGLE_DATASET)
+            csv_path = os.path.join(path, CSV_TABLE)
+            st.session_state.data = pd.read_csv(csv_path)
+        st.session_state.finished = True
+
+    if st.session_state.finished:
+        st.dataframe(st.session_state.data.head(10))
+        st.success("The dataset was downloaded successfully")
+        st.info("The provided table displays the first 10 rows of the dataset")
+
+        if st.button("Continue"):
+            st.session_state.stage = 3
+            st.rerun()
+
+    if (st.button("Previous page")):
+        st.session_state.stage = 1
+        st.rerun() 
+
+if (st.session_state.stage == 3):
+    st.title("Features and value to predict")
+    st.header("X and y")
+    st.write(
+        "The next step is choosing the parameter to predict (y) and the two features that using them we will predict y.\n\n"
+        "In my case I chose to predict the orbital period of a sattelite using its orbit's Perihelion distance and its Aphelion distance (from the parental object)."
+    )
+
+    data = st.session_state.data
+    X = data[FEATURE_COLUMNS].to_numpy()
+    y = data[TARGET_COLUMN].to_numpy()
+    df = pd.DataFrame({
+        FEATURE_COLUMNS: X[:10],
+        TARGET_COLUMN: y[:10],
+    })
+
+    st.dataframe(df)
+    st.success("Dataset was successfully divided to X and y.")
