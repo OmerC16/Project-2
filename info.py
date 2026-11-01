@@ -18,5 +18,4 @@ st.write(
     "The game includes two sliders that are used to supply the AI model with information, so it will be able to predict the orbital period.\n\n"
     "The distances that the user provided is then displayed, along with the orbital period prediction, in the green box under the sliders.\n\n"
     "In order to visualize the orbit that the user has created (with the information they provided), there is a graph under the information text box that shows the parental object and the sattelite's orbit around it (this visualization is not accurate).\n\n"
-    "The user is able to add multiple sattelite orbits around the same parental object in the graph. In order to do that, press the \"Add another orbit\" button that is located under the input slider, than change the input sliders and they will influence the second orbit that will appear."
 )
