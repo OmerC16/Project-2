@@ -9,8 +9,8 @@ st.warning("Notes\n\n"
 
 st.header("Model information")
 st.write(
-    "The AI model is a Linear Regression model that uses two features to predict the output.\n\n"
-    "In this case, the model takes an input of the Perihelion distance and the Aphelion distance of the sattelite's orbit, and predicts the Orbital period of the sattelite."
+    "The AI model is a Linear Regression model that uses two features to predict a output.\n\n"
+    "In this case, the model takes as input the Perihelion distance and the Aphelion distance of the sattelite's orbit, and predicts the Orbital period of the sattelite."
 )
 
 st.header("Game explanation")
