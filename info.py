@@ -4,7 +4,7 @@ st.title("Information")
 st.warning("Notes\n\n"
            "Orbital period (days) - The time it takes for a sattelite to complete one full orbit.\n\n"
            "Perihelion distance (AU) - The distance of the sattelite from the parental object it orbits, at its closest point to it.\n\n"
-           "Aphelion distance (AU) - The distance of the sattelite from the parental object it orbits, at its farthest point fro it."
+           "Aphelion distance (AU) - The distance of the sattelite from the parental object it orbits, at its farthest point froצ it."
         )
 
 st.header("Model information")
